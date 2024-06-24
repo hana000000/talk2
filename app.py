@@ -1,5 +1,6 @@
 import streamlit as st
 import openai
+from PIL import Image
 
 # APIキーの設定
 openai.api_key = st.secrets["OpenAIAPI"]["openai_api_key"]
@@ -67,7 +68,15 @@ def communicate():
 
 # ユーザーインターフェイスの構築
 st.title("対話型ゲーム")
-st.image("salad_bar.png")
+
+# 画像の表示
+try:
+    st.image("salad_bar.png")
+except FileNotFoundError:
+    st.error("画像ファイルが見つかりません。ファイルパスを確認してください。")
+except PIL.UnidentifiedImageError:
+    st.error("画像ファイルの形式が認識されません。ファイルが破損している可能性があります。")
+
 st.write("中世風RPGです。行動回数が0になる前に魔王を倒してください。")
 
 user_input = st.text_input("メッセージを入力してください。", key="user_input", on_change=communicate)
