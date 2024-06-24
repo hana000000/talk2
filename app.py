@@ -1,10 +1,8 @@
-# 以下を「app.py」に書き込み
 import streamlit as st
 import openai
-# import secret_keys  # 外部ファイルにAPI keyを保存
 
-# openai.api_key = secret_keys.openai_api_key
-openai.api_key = st.secrets.OpenAIAPI.openai_api_key
+# APIキーの設定
+openai.api_key = st.secrets["OpenAIAPI"]["openai_api_key"]
 
 system_prompt = """
 このスレッドでは以下ルールを厳格に守ってください。
@@ -36,7 +34,7 @@ system_prompt = """
 　　・時間経過すること
 　　・行動に結果を付与すること
 　・「残り行動回数」が 0 になるとゲームオーバーになる
-　・「残り行動回数」が 0 だと「冒険者の行動」はできない
+ 　・「残り行動回数」が 0 だと「冒険者の行動」はできない
 　・冒険者が死んだらゲームオーバー
 　・ゲームオーバー
 　　・アンハッピーエンドの「ストーリー」を表示
@@ -48,7 +46,7 @@ system_prompt = """
 if "messages" not in st.session_state:
     st.session_state["messages"] = [
         {"role": "system", "content": system_prompt}
-        ]
+    ]
 
 # チャットボットとやりとりする関数
 def communicate():
@@ -67,10 +65,9 @@ def communicate():
 
     st.session_state["user_input"] = ""  # 入力欄を消去
 
-
 # ユーザーインターフェイスの構築
-st.title(" 対話型ゲーム")
-# st.image("salad_bar.png")
+st.title("対話型ゲーム")
+st.image("salad_bar.png")
 st.write("中世風RPGです。行動回数が0になる前に魔王を倒してください。")
 
 user_input = st.text_input("メッセージを入力してください。", key="user_input", on_change=communicate)
@@ -80,7 +77,7 @@ if st.session_state["messages"]:
 
     for message in reversed(messages[1:]):  # 直近のメッセージを上に
         speaker = "🙂"
-        if message["role"]=="assistant":
-            speaker="🤖"
+        if message["role"] == "assistant":
+            speaker = "🤖"
 
         st.write(speaker + ": " + message["content"])
