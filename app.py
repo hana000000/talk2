@@ -66,7 +66,7 @@ def communicate():
 
 # ユーザーインターフェイスの構築
 st.title('サラダバー勧誘ゲーム')
-# st.image("salad_bar.png")
+st.image("salad_bar.png")
 st.write('普段野菜を食べないあなたの同僚に、サラダバーの利用をすすめてください。')
 st.write('相手は３０歳男性独身。健康診断で異常を指摘されたことはありません。')
 st.write('趣味はゲームで運動もしません。')
