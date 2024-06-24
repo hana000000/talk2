@@ -1,6 +1,6 @@
 import streamlit as st
 import openai
-from PIL import Image
+from PIL import Image, UnidentifiedImageError  # PILの必要なモジュールをインポート
 
 # APIキーの設定
 openai.api_key = st.secrets["OpenAIAPI"]["openai_api_key"]
@@ -74,7 +74,7 @@ try:
     st.image("salad_bar.png")
 except FileNotFoundError:
     st.error("画像ファイルが見つかりません。ファイルパスを確認してください。")
-except PIL.UnidentifiedImageError:
+except UnidentifiedImageError:
     st.error("画像ファイルの形式が認識されません。ファイルが破損している可能性があります。")
 
 st.write("中世風RPGです。行動回数が0になる前に魔王を倒してください。")
